@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue入门</title>
+</head>
+<body>
+    <!--定义一个视图-->
+    <div id="app">
+        <!--vue插值表达式  可以将JavaScript中的数据展示到页面中-->
+        {{msg}}
+    </div>
+</body>
+<script src="./lib/vue.js"></script>
+<script>
+    //创建一个vue实例(对象)  
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg :'欢迎来到广西工业职业技术学院'
+        }
+    });
+</script>
+</html>

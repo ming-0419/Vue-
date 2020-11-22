@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21-父组件向子组件中传递方法</title>
+</head>
+<body>
+    <!--定义视图区域-->
+    <div id="app">
+        <h3>父组件中引用父组件中的 msg 数据-------{{msg}}</h3>
+        <!--
+            子组件如果要接收父组件中的方法的话 要使用这个v-on指令来接收，将这个父组件中的方法传递到
+            $emit的函数名中
+        -->
+        <my-Com  :shuju-Name="msg" @functionname="show"></my-Com>
+    </div>
+
+
+
+        <!--这个template标签，就是专门用来定义模板的,这个template标签要放在视图区域外面-->
+        <template id="temp">
+            <div>
+                <h2>这种使用template来定义组件的方式是我个人比较推荐的</h2>
+                <h3>{{message}}</h3>
+                <!--（注意：子组件中要显示接收过来的数据的话 ，接收的变量名要使用这个prop中的变量名显示）-->
+                <h3>子组件中引用父组件中的 msg 数据（注意观察有没有这个数据）-------{{shujuName}}</h3>
+                <h4 style="color:red">因为父组件中是不能直接引用子组件的数据的，子组件也是不能直接应用父组件的数据</h4>
+                <button @click="add">调用一下组件中的方法---------: {{num}}</button>
+            </div>
+        </template>
+    
+</body>
+<!--引入vue。js文件-->
+<script src="vue.js"></script>
+<script>
+
+   Vue.component("myCom",{
+        template:'#temp',//将这个模板绑定到组件中
+        //props参数就是用来接收父组件中的数据的，要在使用这个子组件的时候通过v-bind指令来接收父组件传递过来的数据
+        props:['shujuName'],//用props中的变量名shujuName来接收数据
+        data:function(){
+            return{
+                message:'这里是组件中的数据',
+                num:'999'
+            }
+        },
+        //在组件中定义这个方法的话 跟在vue实例中定义方法是一样的
+        methods: {
+            add(){
+                this.num++;
+                //如果想要在子组件中调用父组件的方法的话 要使用vue提供$emit这个方法
+                //this.$emit("函数名"); emit英文意思是发射的意思 在计算机中引申为 触发
+                this.$emit("functionname");//这里这个函数名定义的是用来接收父组件中的方法
+            }
+        },
+
+    });
+
+    //定义局部组件
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'欢迎来到王者峡谷'
+        },
+        methods:{
+            show(){
+                console.log("这个是父组件中的方法");
+            }
+        },
+        //局部组件就定义在下面这个区域
+        components:{
+
+        }
+    });
+
+</script>
+</html>

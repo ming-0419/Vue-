@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何通过路由获取url地址上面的参数信息</title>
+    <style>
+        .header{
+            height: 100px;
+            border: 1px solid red;
+        }
+
+        .content{
+            display: flex;
+            /*利用这个弹性布局 可以扩展和收缩 flex容器中元素 达到最大充分利用空间的限度*/
+        }
+
+        .sidebar{
+            flex: 2;
+            border: 1px solid green;
+            height: 600px;
+        }
+
+        .mainbox{
+            flex: 8;
+            border: 1px solid blue;
+            height: 600px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--这个router-view坑表示的是 这个导航条部分的组件-->
+        <router-view></router-view>
+        <div class="content">
+            <!--在这个弹性布局区域中有两个组件-->
+            <router-view name="a"></router-view>
+            <router-view name="b"></router-view>
+        </div>
+
+    </div>
+
+</body>
+<!--因为vue官方的vue.js里面没有提供路由对象，我们需要引入路由的js包-->
+<script src="vue.js"></script>
+<!--使用官方推荐的vue-router路由工具-->
+<script src="vue-router.js"></script>
+<script>
+
+    //定义3个组件 分别实现不同的样式效果
+    var header = {
+        template:'<div class="header">header 头部导航条</div>'
+    }
+
+    var sidebar = {
+        template:'<div class="sidebar">sidebar 左侧菜单栏</div>'
+    }
+
+
+    var mainbox = {
+        template:'<div class="mainbox">mainbox 显示的组件</div>'
+    }
+
+
+    var router  = new VueRouter({
+        routes:[
+            {
+                path:'/',
+                //匹配到这个/路由规则时一次匹配多个组件
+                components:{
+                    default:header,
+                    a:sidebar,
+                    b:mainbox
+                }
+            }
+        ]
+    });
+
+    
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+        },
+        methods: {
+
+        },
+        //路由对象创建好后，将这个路由对象挂载到vue实例中
+        router:router
+    });
+</script>
+</html>

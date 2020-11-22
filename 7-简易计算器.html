@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简易计算器</title>
+</head>
+<body>
+    <div id="app">
+        <!--计数器第一个数字的输入框-->
+        <input type="text" v-model="num1">
+        <!--运算符号的 复选框  这里使用v-mode指令 进行数据的双向绑定  option的value改变了的话  data里面的数据也会改变-->
+        <select v-model="opt">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <!--计数器第二个数字的输入框-->
+        <input type="text" v-model="num2">
+        <!--点击 进行运算的按钮-->
+        <input type="button" value="=" @click="cul"><!--按钮 这里要有这个点击事件 当我点击了 按钮后计算出运算结果-->
+        <!--运算结果的 框框-->
+        <input type="text" v-model="result">
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            num1:0,
+            num2:0,
+            result:0,
+            opt:'+'
+        },
+        methods: {//在vue中 所有的方法都是定义在这里这个区域
+        //但用户点击 = 按钮的时候 出发这个计算函数
+            cul(){
+                //这里的话 需要根据用户选定的运算符号 进行判断  
+                //我们需要判断用户的选择的运算符号
+                switch(this.opt){
+                    case '+':
+                        //处理加法运算的语法
+                        //如果是加法运算的话  在JavaScript里面 你需转换一下字符串 将字符串转成数字 方法parseInt()
+                        //加号 默认是进行字符串的一个拼接的 需要将这个字符串 转换成 数字parseInt()
+                        this.result = parseInt(this.num1)+ parseInt(this.num2);
+                        break;
+                    case '-':
+                        //处理减法运算的语法  - 号拿出来就是直接进行减法运算
+                        this.result = this.num1-this.num2;
+                        break;
+                    case '*':
+                        //处理乘法运算的语法
+                        // this.result = parseInt(this.num1)* parseInt(this.num2); 效果更下面的是一样的
+                        this.result = this.num1*this.num2;
+                        break;
+                    case '/':
+                        //处理除法运算的语法
+                        this.result = this.num1/this.num2;
+                        break;
+                }
+            }
+
+        },
+    });
+</script>
+</html>

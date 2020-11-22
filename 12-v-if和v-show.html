@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if和v-show指令</title>
+    <!--引入外部的bootstrap css 文件-->
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+
+    <div id="app">
+        <!-- 添加一个修改flag值的按钮  ！ 非 取反的意思-->
+        <button @click="flag = !flag">变换形态</button>
+
+        <h2 style="color: red;">下面是使用v-if的标签</h2>
+        <!-- 
+            v-if 条件渲染指令 简单来说就是根据这个v-if里面的值来决定是否显示这个标签
+            v-if 用于移除这个标签或者添加标签（通过判断这个""里面的条件）
+            它可以跟v-else一起使用 
+
+            v-if是直接将标签注释掉
+                特点：每次重写删除或者添加元素就比较损耗性能，不太适合需要频繁切换是否显示标签的场景
+                v-if适合一次性隐藏或显示，后面不在改变的场景
+        -->
+        <h2 v-if="flag">哈哈哈哈</h2>
+        <h2 v-else>不哈哈哈了</h2>
+
+        <!--完整 用法-->
+        <h3 v-if="type === 'A'">A</h3>
+        <h3 v-else-if="type === 'B'">B</h3>
+        <h3 v-else>C</h3>
+
+        <h2 style="color: red;">下面是使用v-show的标签</h2>
+        <!-- 
+            v-show 指令的使用 跟v-if类似 用决定做标签是否显示内容
+            v-show 它不能跟v-else一起使用
+            它实现这个标签内容不显示的方式，是通过在这个标签中添加这个display：none样式属性实现
+
+            特点：display属性在初始化的时候就比损耗性能，如果你是需要永久性性的隐藏标签则不推荐使用v-show
+                  v-show适合频繁消失或显示标签的场景
+        
+        -->
+        <h2 v-show="flag">啦啦啦</h2>
+    </div>
+    
+</body>
+<!--文件 这个我们这个网页文件放在同一个目录下面-->
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+           flag:true,//这个是boolean类型的参数 它的取值范围true、false
+           type:'B'
+        },
+        methods: {
+           
+        },
+    });
+
+</script>
+</html>

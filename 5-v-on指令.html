@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-bind的作用</title>
+</head>
+<body>
+    <div id="app">
+        <!--v-bind 可以用：缩写 一般后面都是使用：来代替-->
+        <input type="button" value="按钮1" :title='"鼠标放上去显示内容----"+msg'>
+        <input type="button" value="按钮2" :title='msg'>
+        <br>
+
+        <!--v-on 点击指令 出发点击事件-->
+        <input type="button" value="按钮3" :title='msg' v-on:click='add'>{{num}}
+        <!--v-on 可以使用缩写  @来代替  后面的代码呢 主要都是使用@符号来代替v-on -->
+        <br>
+        使用 @符合来代替这个 v-on
+        <input type="button" value="按钮3" :title='msg' @click='add'>{{num}}
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'Hello Vue',  //编程时 标点符号全部都要使用英文 
+            title:'你好vue',
+            textA:'<h1>我是用来替换的</h1>',
+            num:100
+        },
+        methods: {//在vue中 所有的方法都是定义在这里这个区域
+            add(){
+                //如果要在方法 中获取data的数据的话  要使用this  这里的this也是指的是当前对象
+                //this.num  这里是获取data中的数据  num  data是可以省略
+                this.num = this.num +1;
+            }
+        },
+    });
+</script>
+</html>

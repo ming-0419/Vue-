@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18-在组件中定义这数据和方法</title>
+</head>
+<body>
+    <!--定义视图区域-->
+    <div id="app">
+        <h3>父组件中引用父组件中的 msg 数据-------{{msg}}</h3>
+        <my-Com></my-Com>
+    </div>
+
+
+
+        <!--这个template标签，就是专门用来定义模板的,这个template标签要放在视图区域外面-->
+        <template id="temp">
+            <div>
+                <h2>这种使用template来定义组件的方式是我个人比较推荐的</h2>
+                <h3>{{message}}</h3>
+                <h3>子组件中引用父组件中的 msg 数据（注意观察有没有这个数据）-------{{msg}}</h3>
+                <h4 style="color:red">因为父组件中是不能直接引用子组件的数据的，子组件也是不能直接应用父组件的数据</h4>
+                <button @click="add">调用一下组件中的方法---------: {{num}}</button>
+            </div>
+        </template>
+    
+</body>
+<!--引入vue。js文件-->
+<script src="vue.js"></script>
+<script>
+
+   Vue.component("myCom",{
+        template:'#temp',//将这个模板绑定到组件中
+        //在组件不能够使用这种方式来定义数据
+        // data:{
+        //     msessage:'这是组件内部的数据'
+        // }
+        //在组件中正确的定义数据的方式：使用function来定义
+        //为什么要在data中定义一个function函数来返回数据呢？
+        //因为：调用数据的时候必然会调用data中function，从而就可以得到当前组件中私有的对象
+        data:function(){
+            return{
+                message:'这里是组件中的数据',
+                num:'999'
+            }
+        },
+        //在组件中定义这个方法的话 跟在vue实例中定义方法是一样的
+        methods: {
+            add(){
+                this.num++;
+
+            }
+        },
+
+    });
+
+    //定义局部组件
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'欢迎来到王者峡谷'
+        },
+        //局部组件就定义在下面这个区域
+        components:{
+
+        }
+    });
+
+</script>
+</html>

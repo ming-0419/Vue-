@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算属性的使用</title>
+    <!--引入外部的bootstrap css 文件-->
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+
+    <div id="app">
+        <input type="text" v-model="firstName">
+        +
+        <input type="text" v-model="lastName">
+        =
+        <input type="text" v-model="fullName">
+    </div>
+    
+</body>
+<!--文件 这个我们这个网页文件放在同一个目录下面-->
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            firstName:'',
+            lastName:''
+            // fullName:''因为这个fullName被添加成计算属性 那么久不用定义在这里了 否则计算属性就没有作用了
+        },
+        methods: {
+        },
+        //vue提供给我们的计算属性
+        computed: {
+            //这个计算属性的话 
+            // 1.将data中的对象（fullName）添加为计算属性 那么data中就不能再使用这个计算属性的名称
+            // 2.计算属性会监听里面相关的变量的变化 data中的参数发生变化的话 计算属性就会马上自动计算
+            // 3.计算属性会多次计算结果 通过return返回计算结果 计算结果会被缓存起来 方便下次使用
+            // 4.如果计算量比较大的话，会影响这个计算机的性能
+            
+            //第一种写法
+            // fullName:function(){
+            //     // return this.firstName +"--------------" +this.lastName;
+            //     return parseInt(this.firstName)+parseInt(this.lastName);
+            // }
+            //计算属性可以进行拆分
+            fullName:{
+                get(){//get方法就是用来获取其他变量（firstName。。。）改变自身
+                    let str = this.firstName +"--------------"+this.lastName;//let es5中的特性定义变量类型 跟var差不多 
+                    return str;
+                },
+                set(type){
+                    //就是用来监听自身fullName的数据变化的 方便用来设置其他变量
+                    console.log(type);
+                    //这里可以编写代码修改 lastName跟firstName
+                }
+
+            }
+        },
+
+    });
+
+</script>
+</html>

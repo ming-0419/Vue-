@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if和v-show指令</title>
+    <!--引入外部的bootstrap css 文件-->
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+
+    <div id="app">
+        <h2>{{msg}}</h2>
+        <h2>被监听的数据:{{num}}</h2>
+        <button @click="add">点击修改</button>
+    </div>
+    
+</body>
+<!--文件 这个我们这个网页文件放在同一个目录下面-->
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:"#app",
+        data:{
+            msg:'欢迎来到王者荣耀',
+            num:1
+        },
+        methods: {
+           add(){
+               this.num++;
+           }
+        },
+        watch: {//侦听器 它起一个监视的效果 能够实时关注页面data的变化
+            //侦听器使用方式 定义要监听数据num(改变之后的数据，改变之前的数据)
+            num(newvalue,oldvalue){ 
+                //改变之后的数据newvalue
+                //改变之前的数据oldvalue
+                //当data发生改变后就会触发我们这个侦听器
+                this.msg="页面的num数据发生改变了";
+                console.log("改变之后的数据"+newvalue);
+                console.log("改变之前的数据"+oldvalue);
+            }
+            
+        },
+    });
+
+</script>
+</html>

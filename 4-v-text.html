@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-bind的作用</title>
+</head>
+<body>
+    <div id="app">
+        <h3>{{msg}}</h3>
+        <!--
+            v-text  指令的使用 
+            v-text可以修改标签中的内容
+            相当于JavaScript中的 innerText
+        -->
+        <h3 v-text='textA'>我是h3标签里面的内容</h3>
+
+        <!--
+            v-html指令 可以修改标签加上 context的 显示
+            相当于JavaScript中的innerHTMl
+
+        -->
+        <div v-html='textA'><h3>哈哈哈哈</h3></div>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'Hello Vue',  //编程时 标点符号全部都要使用英文 
+            title:'你好vue',
+            textA:'<h1>我是用来替换的</h1>'
+        }
+    });
+</script>
+</html>

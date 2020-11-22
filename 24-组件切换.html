@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22-组件案例评论列表案例</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!--定义一个视图区域 然后挂载到vue对象中-->
+    <div id="app">
+        <button @click="flag = true">登录组件</button>
+        <button @click="flag = false">注册组件</button>
+        <login v-if="flag"></login>
+        <reg v-else></reg>
+    </div>
+
+    <!--定义一下这个评论内容的组件-->
+    <template id="login">
+        <div>
+            <h3>登录组件</h3>
+            <label>账号：</label>
+            <input type="text">
+            <br>
+            <label>密码：</label>
+            <input type="password">
+            <br>
+            <button>登录</button>
+        </div>
+    </template>
+
+    <!--显示评论内容的组件-->
+    <template id="reg">
+        <div>
+            <div>
+                <h3>注册组件</h3>
+            </div>
+        </div>
+    </template>
+
+
+
+</body>
+<script src="./lib/vue.js"></script>
+<script>
+
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            flag:true
+        },
+        methods: {
+
+        },
+        components:{
+            login:{
+                template:"#login"
+            },
+            reg:{
+                template:'#reg'
+            }
+        }
+    });
+</script>
+</html>

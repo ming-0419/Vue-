@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用this.$refs来获取元素和组件</title>
+</head>
+<body>
+    <!--声明一个视图区域-->    
+    <div id="app">
+        <!--简单点 可以通过vue提供的ref属性来获取页标签的元素-->
+        <h2 ref="myh2">我是一个h2标签中你的内容</h2>
+        <!-- //如何通原生JavaScript代码获取页面的 标签内容 -->
+        <button @click="getElelmet">获取标签元素</button>
+        <my-Con ref="myCom"></my-Con>
+    </div>
+
+    <template id="temp">
+        <div>
+            <h2>我是组件中的内容</h2>
+        </div>
+    </template>
+</body>
+<script src="vue.js"></script>
+<script>
+
+    //回顾一下组件的定义
+    Vue.component('myCon',{
+        template:"#temp",
+        //在组件中定义数据
+        data:function(){
+            return {
+                message:1110
+            }
+        },
+        methods:{
+
+        }
+    })
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+
+        },
+        methods: {
+            getElelmet(){
+                //使用原生的JavaScript方法来获取页面的标签元素
+                //当这个按钮别点击后触发这个函数，获取h2标签中的元素
+                // document.getElementsByTagName('h2')[0].innerText
+                console.log(document.getElementsByTagName('h2')[0].innerText);
+                //使用this.$refs来获取 页面中元素 (vue推荐使用的方式)
+                // this.$refs.myh2.innerText
+                console.log(this.$refs.myh2.innerText);
+                //也可以使用this.$refs获取组件的对象
+                console.log(this.$refs.myCom);
+            }
+        },
+    });
+
+
+</script>
+</html>

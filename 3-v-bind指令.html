@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-bind的作用</title>
+</head>
+<body>
+    <div id="app">
+        <!--现在我想让这个 title的值用vue对象里面的数据来显示-->
+        <!--插值表达式的内容是不能作用在 html特性上面的-->
+        <span title={{msg}}>{{msg}}</span>
+        <br>
+        <!--这个v-bind指令可以用来修改html的特性  后面我们会大量的使用  用来修改页面的样式-->
+        <span v-bind:title='title'>{{msg}}</span>
+        <!--v-bind可以进行简写  直接使用:来代替-->
+        <br>
+        <span :title='title'>{{msg}}</span>
+
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'Hello Vue',  //编程时 标点符号全部都要使用英文 
+            title:'你好vue'
+        }
+    });
+</script>
+</html>

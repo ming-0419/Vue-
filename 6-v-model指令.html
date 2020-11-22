@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-bind的作用</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{msg}}</h1>
+        <!--通过 在页面文本框 中修改这个msg数据 然后实时显示到 上面的差值表达式-->
+        <!--试试 v-bind 修改html属性-->
+        <h3>这里我们使用 v-bind 指令试试看看能不能实现</h3>
+        <input type="text" :value="msg"><!--我们使用 v-bind（缩写成了冒号:）无法实现这个数据的同步显示-->
+        <h3>这里我们可以使用新的指令 v-model来实现这个数据的双向绑定 </h3>
+        <!--我们使用v-model 双向数据绑定指令的话 就可以在页面中修改 model模型数据-->
+        <input type="text" v-model="msg">
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            msg:'Hello World'
+        },
+        methods: {//在vue中 所有的方法都是定义在这里这个区域
+
+        },
+    });
+</script>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>如何通过路由获取url地址上面的参数信息</title>
+</head>
+<body>
+    <div id="app" >
+
+        <!--现在我想传递这个参数的时候 将参数的变量名称给隐藏了掉-->
+        <!--如何获取这个隐藏了 这个参数名称的变量信息-->
+        <router-link to="/login/多喝热水/多喝岩浆" >登录</router-link>
+        <router-link to="/reg"> 注册</router-link>
+
+        <!--router-view标签就相当于一个坑位 用来显示路由匹配到的组件的坑-->
+        <router-view></router-view>
+    </div>
+
+    <!--定义一下这个评论内容的组件-->
+    <template id="login">
+        <div>
+            <h3>登录组件</h3>
+            <label>账号：</label>
+            <input type="text" v-model="username">
+            <br>
+            <label>密码：</label>
+            <input type="password" v-model="password">
+            <br>
+            <button>登录</button>
+        </div>
+    </template>
+
+    <!--显示评论内容的组件-->
+    <template id="reg">
+        <div>
+            <div>
+                <h3>注册组件</h3>
+            </div>
+        </div>
+    </template>
+
+</body>
+<!--因为vue官方的vue.js里面没有提供路由对象，我们需要引入路由的js包-->
+<script src="vue.js"></script>
+<!--使用官方推荐的vue-router路由工具-->
+<script src="vue-router.js"></script>
+<script>
+
+    //创建全局组件第5中方式
+    var login = {
+        template:'#login',
+        data() {
+            return {
+                username:'',
+                password:''
+            }
+        },
+        created() {
+            //这里这个this指的是当前 组件对象
+            console.log(this);
+            //我们可以通过$route（当前页面的路由对象）来获取url中的参数信息
+            console.log(this.$route);
+            //我们就可以通过$route中的query属性来获取url中？后面的参数()
+            //URL地址上面？ 后面的参数就是存放到query属性中的
+            console.log(this.$route.params.username);
+            console.log(this.$route.params.password);
+            //将url？后面的参数赋值给 data中的数据嘛
+            this.username = this.$route.params.username;
+            this.password = this.$route.params.password;
+        },
+    }
+
+    /*
+        $route：指的是当前页面对应的路由对象，只有当前页面的路由规则，我们想获取当前页面的url信息，可以通过这个来获取
+        router：表示的整个项目的路由对象（VueRouter）包含了整个项目的所有路由规则
+    
+    */
+
+    var reg = {
+        template:'#reg'
+    }
+
+    //创建路由（router）的方式
+    //当我们导入了vue-router这个文件后，浏览器全局就有了VueRouter的构造函数
+    var router = new VueRouter({
+        //routes表示路由的规则
+        routes:[
+            //虽然我们这边要接收的 参数的变量名称在url地址栏上面是隐藏的 但还是要在这个路由规则这里定义一下
+            //在这这个路由规则这里 添加多一个/：变量名的方式来接收 对应的参数
+            //因为这里有使用 /：变量名的方式来接收 对应的参数 所以能够正确的匹配这个组件
+            {path :'/login/:username/:password',component: login},//path表示的路由监听的地址,component表示根据地址切换到的目标组件
+            //路由会根据匹配到的地址（path）去将对应的组件展示到页面中
+            //这里的component组件 就会被展示到router-view标签这个坑位中
+            {path :'/reg',component: reg}
+            ],
+    });
+
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            flag:true,
+            common:''
+        },
+        methods: {
+
+        },
+        //路由对象创建好后，将这个路由对象挂载到vue实例中
+        router:router
+    });
+</script>
+</html>

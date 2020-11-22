@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for指令</title>
+    <!--引入这个css样式文件-->
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+    <div id="app">
+        <!--  
+            v-for 指令 就是用来循环遍历数组数据 一般来说我们就是用在动态显示表格数据
+            学习前端：页面布局绘制（样式的编写）、数据的渲染（将从服务端获取的数据 渲染到页面）
+
+            v-for语法：
+                v-for="(item,index) in list" 
+                    item指的是 循环后取出的每一项
+                    index表示的是 循环取出的每一项的下标（类似于数组的下标）
+                    in 表示你遍历的是哪个数组
+                    list  这个list名字就跟你遍历的数据的名称相同
+        -->
+        <div v-for="(item,index) in list">
+            {{index}} -------------- {{item}}
+        </div>
+
+        <!-- 一般来说我们就是用在动态显示表格数据
+            一般来说 这边表格的数据 都是存放到服务器端的数据库
+            前端使用来展示 后台的存放在数据库中的数据 来实现这个动态网站的效果
+        -->
+        <h3>明星列表</h3>
+        <table class="table  table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>性别</th>
+                    <th>地址</th>
+                </tr>
+            </thead>
+            <tbody v-for="(item,index) in msg"><!--vue执行的时候 会根据 v-for指令  来循环访问这个msg里面的数据-->
+                <!--里面就是循环体的内容-->
+                <tr>
+                    <th>{{item.id}}</th>
+                    <th>{{item.name}}</th>
+                    <th>{{item.age}}</th>
+                    <th>{{item.sex}}</th>
+                    <th>{{item.address}}</th>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary">（首选项）Primary</button>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            //如何将这里的数组数据 显示到页面中
+            list:['张三','李四','王五','赵柳','陆琪'],
+            //假设 我这里的数据 是从服务器端获取 
+            //[]表示的是个数组
+            //{}表示的是单个对象
+            msg:[
+                {id:1,name:'坤坤',age:23,sex:'男',address:'中国篮球县'},
+                {id:2,name:'凡凡',age:24,sex:'男',address:'加拿大电音县'},
+                {id:3,name:'涛涛',age:25,sex:'男',address:'中国河南'},
+                {id:4,name:'晗晗',age:26,sex:'男',address:'中国'},
+
+            ]
+        }
+    });
+</script>
+</html>

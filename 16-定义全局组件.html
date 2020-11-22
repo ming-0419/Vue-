@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16-定义全局组件</title>
+</head>
+<body>
+    <!--定义视图区域-->
+    <div id="app">
+        <!--使用我们定义好的组件-->
+        <com1></com1><!--这个组件的名称 就是这个组件的标签名-->
+        <!--html标签的话,是不区分大小写的,但是JavaScript中的变量名称是区分大小写的-->
+        <!--因为这个组件的名称是使用这个驼峰命名法的方式来命名的 
+            
+            驼峰命名法：定义变量名称的时候，如果这个变量名是由多个单词组成的，那么第一个单词的首字母要小第二个单词开始的字母要大写，
+        以此来区分不同的单词例如，driverName、myComponent
+            
+            由于我们的html标签是不区分大小写的，所以我们在使用这种驼峰命名法定义的组件的时候，要将这个大写的字母前面加上 - 来作为区分
+        -->
+        <myCom></myCom><!--不起作用-->
+        <my-com></my-com>
+        <my-Con2></my-Con2>
+        <my-con3></my-con3>
+
+
+    </div>
+
+    <hr>
+    <!--定义第二个视图区域，将它挂载到qwe vue对象中-->
+    <div id="qwe">
+        <h1>第二个视图区域</h1>
+        <!--全局组件的话，就是在当前文件中 所有视图区域都可以使用-->
+        <my-con3></my-con3>
+    </div>
+
+        <!--这个template标签，就是专门用来定义模板的,这个template标签要放在视图区域外面-->
+        <template id="temp">
+            <div>
+                <h2>这种使用template来定义组件的方式是我个人比较推荐的</h2>
+            </div>
+        </template>
+    
+</body>
+<!--引入vue。js文件-->
+<script src="vue.js"></script>
+<script>
+    //vue框架中，组件就是用来使用html、css、JavaScript来实现一个独立的功能，这个功能将成为组件
+    //定义全局组件
+    //(1)使用vue.extend的方式来定义组件
+    var con = Vue.extend({//声明一个模板
+        template:`<h2>自定义组件</h2>`  //这里这个符号就是Esc下面的那个点 斜着的点号
+    });
+
+    //将模板注册成为组件
+    //第一个参数是组件的名称，第二个参数是组件指定的模板
+    Vue.component("com1",con);
+
+    //(2)组件和模板合并
+    Vue.component("myCom",Vue.extend({
+        template:'<h2>这里是定义组件的第二种方法</h2>'//这里也可以使用单引号，但是要如果模板中有用到单引号的话，要拼接字符串
+    }));
+
+    //(3)不是用Vue.extend的方式来定义组件
+    Vue.component("myCon2",{
+        template:`<h2>这里是省略掉vue.extend的方式来定义模板</h2>`
+    });
+
+
+    //（4）使用这个template标签来定义模板(简单来说就是页面) 然后再注册成组件
+    Vue.component("myCon3",{
+        template:'#temp'
+    });
+
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+
+        }
+    });
+
+    //再创建多一个vue实例，然后将qwe视图挂载过来
+    var qwe = new Vue({
+        el:"#qwe"
+    });
+</script>
+</html>

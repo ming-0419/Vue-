@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监听路由对象的改变</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul{
+            height: 40px;
+        }
+
+        ul li{
+            float: left;
+            width: 100px;
+            height: 40px;
+            line-height: 40px;/*让字体纵向（垂直）方向居中*/
+            text-align: center;
+            font-size: 25px;
+        }
+
+        ul li.con{
+            background-color: orange;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" >
+
+        <!--vue的路由是有提供对应的标签-->
+        <!--如果想要切换路由hash地址的话要使用router-link标签-->
+        <!--这个tag属性就是 将这个router-link标签附上 tag里面标签的属性-->
+        <ul>
+            <router-link to="/login" tag="li" >登录</router-link>
+            <router-link to="/reg" tag="li"> 注册</router-link>
+        </ul>
+
+        <!--router-view标签就相当于一个坑位 用来显示路由匹配到的组件的坑-->
+        <router-view></router-view>
+    </div>
+
+    <!--定义一下这个评论内容的组件-->
+    <template id="login">
+        <div>
+            <h3>登录组件</h3>
+            <label>账号：</label>
+            <input type="text">
+            <br>
+            <label>密码：</label>
+            <input type="password">
+            <br>
+            <button>登录</button>
+        </div>
+    </template>
+
+    <!--显示评论内容的组件-->
+    <template id="reg">
+        <div>
+            <div>
+                <h3>注册组件</h3>
+            </div>
+        </div>
+    </template>
+
+</body>
+<!--因为vue官方的vue.js里面没有提供路由对象，我们需要引入路由的js包-->
+<script src="vue.js"></script>
+<!--使用官方推荐的vue-router路由工具-->
+<script src="vue-router.js"></script>
+<script>
+
+    //创建全局组件第5中方式
+    var login = {
+        template:'#login',
+        data() {
+            return {
+                
+            }
+        },
+    }
+
+    var reg = {
+        template:'#reg'
+    }
+
+    //创建路由（router）的方式
+    //当我们导入了vue-router这个文件后，浏览器全局就有了VueRouter的构造函数
+    var router = new VueRouter({
+        //routes表示路由的规则
+        routes:[
+            {path :'/login',component: login},//path表示的路由监听的地址,component表示根据地址切换到的目标组件
+            //路由会根据匹配到的地址（path）去将对应的组件展示到页面中
+            //这里的component组件 就会被展示到router-view标签这个坑位中
+            {path :'/reg',component: reg}
+            ],
+            //使用路由的样式控制属性设置选中的样式类名
+        linkActiveClass:'con'
+    });
+
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            flag:true,
+            common:''
+        },
+        methods: {
+
+        },
+        //路由对象创建好后，将这个路由对象挂载到vue实例中
+        router:router,
+        //使用这个侦听器来监听路由对象的改变
+        watch: {
+            //使用侦听器监听路由地址的变化 $route表示的是当前页面的路由对象
+            '$route':function(newVal,oldVal){
+                if(newVal.path==='/login'){
+                    console.log('已经切换到了这个登录组件');
+                    alert('欢迎来到登录页面')
+                }
+                if(newVal.path==='/reg'){
+                    console.log('q切换到了注册组件');
+                    alert('欢迎来到注册页面')
+                }
+            }
+        },
+    });
+</script>
+</html>

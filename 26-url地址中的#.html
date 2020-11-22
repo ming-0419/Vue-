@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>url地址中的#</title>
+</head>
+<body>
+
+    url地址中的#是 hash 哈希  符号 #，一般来说就是用来进行浏览器(客户端)页面定位的，
+    这#后面的地址发生改变的话，页面不会刷新 也不会向服务器端发送http请求
+    <br>
+    但是# 能够修改浏览器的历史记录
+    <br>
+    hash # 就是这个路由的基础
+    <a href="#/a">a</a>
+    <a href="#/b">b</a>
+
+
+</body>
+<script>
+    //浏览器这里是有提供监听hash值变化的方法的
+    window.onhashchange = function(){
+        console.log('浏览器监听到hash值的变化');
+    }
+</script>
+</html>

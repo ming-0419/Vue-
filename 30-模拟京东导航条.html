@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模拟京东导航条</title>
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    ul{
+        list-style: none;
+        /*固定定位，将标签元素固定到浏览器的某个位置*/
+        position: fixed;
+        left: 0;
+        /*标签距离底部的位置*/
+        bottom: 0;
+        /*使用弹性布局*/
+        display: flex;
+        width: 100%;
+        /*上边框线*/
+        border-top: 0.6px solid #d6d6d6;
+    }
+
+    ul li{
+        flex: 1;
+        height: 40px;
+        /*这个行高等于元素高度的话 就是里面的内容纵向居中的意思*/
+        line-height: 40px;
+        text-align: center;
+    }
+
+    ul li.con{
+        background-color: red;
+        color: white;
+    }
+
+</style>
+<body>
+    <div id="app" >
+        <ul>
+            <router-link to="/index" tag="li">首页</router-link>
+            <router-link to="/sort" tag="li">分类</router-link>
+            <router-link to="/surprise" tag="li">京喜</router-link>
+            <router-link to="/cart" tag="li">购物车</router-link>
+            <router-link to="/login" tag="li">登录</router-link>
+        </ul>
+
+        <!--定义一个路由的坑位-->
+        <router-view></router-view>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script src="vue-router.js"></script>
+<script>
+        //创建一下路由地址对应的组件
+        var index = {
+            template:'<h1>欢迎来到首页</h1>'
+        }
+
+        var sort = {
+            template:'<h1>商品分类页面</h1>'
+        }
+
+        var surprise = {
+            template:'<h1>京喜页面</h1>'
+        }
+
+        var cart = {
+            template:'<h1>购物车页面</h1>'
+        }
+
+        var login = {
+            template:'<h1>登录</h1>'
+        }
+
+        //创建一个路由对象
+        var router = new VueRouter({
+            //里面添加路由规则
+            routes:[
+                {path:'/',component:index},//当页面打开的就显示欢迎页面index组件
+                {path:'/index',component:index},
+                {path:'/sort',component:sort},
+                {path:'/surprise',component:surprise},
+                {path:'/cart',component:cart},
+                {path:'/login',component:login},
+            ],
+            //使用路由来选中的标签的样式
+            linkActiveClass:'con'
+        });
+
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            flag:true,
+            common:''
+        },
+        methods: {
+
+        },
+        //路由对象创建好后，将这个路由对象挂载到vue实例中
+        router:router
+    });
+
+</script>
+</html>

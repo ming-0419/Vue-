@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>vue入门</title>
+    </head>
+    <body>
+        <!--定义一个视图 view-->
+        <div id="app">
+            <!--vue插值表达式  可以将JavaScript中的数据展示到页面中-->
+            {{msg}}
+        </div>
+    </body>
+    <!--导入vue这个文件-->
+    <script src="vue.js"></script>
+    <!-- <script src="./lib/vue.js"></script>导入lib文件夹下面的vue.js文件 -->
+    <script>
+        //创建一个vue实例(对象)  
+        //创建一个viewModel对象 就是一个调度者  负责将这个页面和数据进行
+        var vm = new Vue({
+            el:'#app',
+            data:{  //数据模型
+                msg :'欢迎来到广西工业职业技术学院'
+            }
+        });
+    </script>
+</html>

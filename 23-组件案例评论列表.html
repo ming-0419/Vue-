@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23-组件案例评论列表</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+</style>
+<body>
+    <!--定义视图区域-->
+    <div id="app">
+        <my-com @func="addNewCmt"></my-com>
+        <com-Item v-for="(item,index) in list" :key="index" :comtentmessage="item"></com-Item>
+    </div>
+
+    <template id="combox">
+        <div>
+            <label>评论人:</label>
+            <br>
+            <input type="text" v-model="name">
+            <br>
+            <label>评论内容：</label>
+            <br>
+            <textarea v-model="content"></textarea>
+            <br>
+            <button @click="postComment">发表评论</button>
+        </div>
+    </template>
+
+    <template id="comitem">
+        <div>
+            <ul>
+                <hr>
+                <li>
+                    <h3>评论人：{{comtentmessage.name}}</h3>
+                    <h5>评论内容：{{comtentmessage.content}}</h5>
+                </li>
+                
+            </ul>
+        </div>
+    </template>
+
+    
+</body>
+<!--引入vue。js文件-->
+<script src="vue.js"></script>
+<script>
+
+    Vue.component('myCom',{
+        template:'#combox',
+        //发表评论的话，主要练习的是组件传值
+        data:function(){
+            return{
+                name:'',
+                content:''
+            }
+        },
+        methods:{
+            postComment(){
+                //首先要获取评论内容
+                var cmt = {name:this.name,content:this.content};
+                console.log(cmt);
+                //调用父组件的函数 ，并且向父组件传值
+                this.$emit('func',cmt);
+            }
+        }
+    });
+
+    Vue.component('comItem',{
+        template:'#comitem',
+        props:['comtentmessage']
+    })
+
+    //定义局部组件
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            //先在父组件中定义一个数组，用来存放这个评论信息
+            list:[
+                {name:'zs',content:'我抢到沙发了'},
+                {name:'ls',content:'我抢到板凳了'},
+                {name:'ww',content:'凉席'},
+                {name:'sss',content:'砖头'},
+            ]
+        },
+        methods:{
+            addNewCmt(arg){
+                console.log("接收子组件传递过来的数据:============"+arg);
+                this.list.push(arg);
+            }
+        },
+        //局部组件就定义在下面这个区域
+        components:{
+
+        }
+    });
+
+</script>
+</html>

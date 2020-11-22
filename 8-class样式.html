@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-bind的作用</title>
+    <style>
+        .n1{
+            color: orange;
+        }
+
+        .n2{
+            font-size: 45px;
+        }
+
+        .n3{
+            font-style: italic;/*斜体字*/
+        }
+        
+        .n4{
+            font-size: 30px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!--引入css样式 同时使用多个样式的话  一起倒入  用空格隔开-->
+        <div class="n1 n2 n3">世界那么大,我想去看看</div>
+        <!--v-bind来绑定样式  中使用这个数组来绑定css样式 效果同上-->
+        <div :class="['n1','n2','n3']">世界那么大,我想去看看</div>
+        <!--
+            v-bind来绑定样式  在这个v-bind中我们可以进行一些简单逻辑判断 
+            根据不同的情况 去选择不同的样式 可以编写三目运算符
+            v-bind里面的内容 如果不用单引号的话就是data中的数据 
+                            用了=单引号的话就是css样式
+        -->
+        <div :class="['n1',aaa ? 'n4' : 'n2' ,'n3']">世界那么大,我想去看看</div>
+        <!--在页面设置一个按钮 改变这个aaa的值-->
+        <br>
+        <input type="button" value="改变大小" @click="aaa=!aaa">
+        <br>
+        <!--也可以直接在数组中进行显示判断  {'n3': bbb} 在这个花括号里面 就是可以根据后面的数值决定这个特性是否显示  bbb为false-->
+        <div :class="['n1','n2',{'n3': bbb}]">世界那么大,我想去看看</div>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            aaa:true,
+            bbb:false
+        }
+    });
+</script>
+</html>
